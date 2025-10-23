@@ -13,7 +13,7 @@ def pin_to_ipfs(data):
         print("Please create this file and paste your Pinata JWT into it.")
         return None
     # ---------------
-		
+
     endpoint = "https://api.pinata.cloud/pinning/pinJSONToIPFS"
 
     # Set the headers for authentication
@@ -21,7 +21,7 @@ def pin_to_ipfs(data):
         "Authorization": f"Bearer {jwt_token}"
     }
     
-    # Send the data in the 'pinataContent' key, as required by the Pinata API
+    # We send the data in the 'pinataContent' key, as required by the Pinata API
     payload = {
         "pinataContent": data,
         "pinataOptions": {
@@ -46,9 +46,10 @@ def pin_to_ipfs(data):
 def get_from_ipfs(cid, content_type="json"):
     assert isinstance(cid, str), f"get_from_ipfs accepts a cid in the form of a string"
     
-    # Use a public gateway as shown in the instructions
-    # Use the cloudflare-ipfs.com gateway
-    gateway_url = f"https://cloudflare-ipfs.com/ipfs/{cid}"
+    # --- THIS IS THE FIX ---
+    # We are using the 'ipfs.io' gateway instead of 'cloudflare-ipfs.com'
+    gateway_url = f"https://ipfs.io/ipfs/{cid}"
+    # ---------------------
 
     try:
         response = requests.get(gateway_url)
